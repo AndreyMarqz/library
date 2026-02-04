@@ -22,13 +22,14 @@ body {
 }
 
 .login {
-    width: 100px;
+    width: 80px;
     border-style: none;
     background-color: rgb(230, 230, 230);
     padding: 4px;
     font-size: 1.2em;
     border-radius: 5px;
     font-weight: 500;
+    font-size: 1em;
 }
 
 main {
@@ -59,6 +60,83 @@ main {
 .add-book-btn:hover {
     background-color: rgb(237, 237, 237);
     transform: scale(1.1);
+}
+
+.add-book-form {
+    background-color: white;
+    height: 380px;
+    width: 300px;
+    border: 2px solid rgb(156, 156, 156);
+    border-radius: 8px;
+    padding: 30px 10px 0 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+.add-book-form::backdrop {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+form > h1 {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+form > input {
+    width: 80%;
+    padding: 5px 5px 5px 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(160, 160, 160);
+    outline: none;
+}
+
+form > input:focus {
+    border-color: rgb(63, 63, 63);
+}
+
+.read-or-not-container {
+    display: flex;
+    gap: 10px;
+    align-self: flex-end;
+    margin-right: 10%;
+}
+
+.read-or-not-container > p {
+    font-size: 0.85em;
+    color: rgb(113, 113, 113);
+}
+
+.read-or-not-container > input {
+    cursor: pointer;
+    width: 15px;
+}
+
+form > button, .close-btn {
+    width: 80%;
+    padding: 10px;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(231, 231, 231);
+    font-weight: 600;
+    font-size: 1em;
+    margin: 10px 0 0 0;
+}
+
+.close-btn {
+    margin: 0;
+    background-color: rgb(255, 0, 0);
+    color: white;
 }
 
 footer {
