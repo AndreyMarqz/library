@@ -5,11 +5,11 @@ const closeFormButton = document.querySelector(".close-btn");
 
 addBookButton.addEventListener("click", () => {
     addBookForm.showModal();
-})
+});
 
 closeFormButton.addEventListener("click", () => {
     addBookForm.close();
-})
+});
 
 let myLibrary = [];
 
@@ -23,39 +23,63 @@ function Book(author, name, pages){
 function addBookToLibrary(author, name, pages){
     const newBook = new Book(author, name, pages);
     myLibrary.push(newBook);
+}
 
-    render();
+function sendBookToLibrary(){
+    const authorNameField = document.querySelector(".author-name").value;
+    const bookNameField = document.querySelector(".book-title").value;
+    const pagesNumberField = document.querySelector(".book-pages").value;
+
+    addBookToLibrary(authorNameField, bookNameField, Number(pagesNumberField));
+}
+
+function displayCard(){
+    let bookCardContainer = document.querySelector(".book-container");
+    
+    if (!bookCardContainer) {
+        bookCardContainer = document.createElement("div");
+        bookCardContainer.classList.add("book-container");
+        document.querySelector("main").appendChild(bookCardContainer);
+    }
+
+    bookCardContainer.innerHTML = "";
+
+    myLibrary.forEach((book) => {
+        const bookCard = document.createElement("div");
+        bookCard.classList.add("book-card");
+
+        bookCard.innerHTML = `
+            <h2>${book.name}</h2>
+            <p><strong>Author:</strong> ${book.author}</p>
+            <p><strong>Pages:</strong> ${book.pages}</p>
+        `;
+
+        bookCardContainer.appendChild(bookCard);
+    });
 }
 
 addBookForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+    event.preventDefault(); 
 
-    const authorNameField = document.querySelector(".author-name").value;
-    const bookTitleField = document.querySelector(".book-title").value;
-    const bookPagesField = document.querySelector(".book-pages").value;
+    const addBookText = document.querySelector(".add-book");
+    addBookText.style.fontSize = "0.8em";
+    addBookButton.style.width = "50px";
+    addBookButton.style.height = "50px";
+    addBookText.style.flexDirection = "row";
+    addBookText.style.gap = "15px";
+    
+    const main = document.querySelector("main");
+    main.style.flexDirection = "column";
+    main.style.alignItems = "center";
+    main.style.justifyContent = "flex-start";
+    main.style.gap = "30px";
+    main.style.paddingTop = "20px";
+    main.insertBefore(addBookText, main.firstChild);
 
-    addBookToLibrary(authorNameField, bookTitleField, bookPagesField);
+    sendBookToLibrary();
+    displayCard();
+    
+    addBookForm.querySelector("form").reset();
+    addBookForm.close();
+});
 
-    addBookForm.reset();
-})
-
-function render(){
-    const mainContent = document.querySelector("main");
-
-    mainContent.innerHTML = "";
-
-    myLibrary.forEach((book) => {
-        const bookDiv = document.createElement("div");
-        bookDiv.classList.add("book-card");
-
-        bookDiv.setAttribute("data-id", book.id);
-
-        bookDiv.innerHTML = `
-            <h3>${book.name}</h3>
-            <p>Autor: ${book.author}</p>
-            <p>Páginas: ${book.pages}</p> 
-        `;
-
-        mainContent.appendChild(bookDiv);
-    });
-}

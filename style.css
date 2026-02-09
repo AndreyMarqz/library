@@ -145,6 +145,15 @@ footer {
     margin: 0 0 10px 0;
 }
 
+.copyrights > p {
+    font-weight: 400;
+}
+
+.name-bolder {
+    margin-left: -5px;
+    font-weight: 700;
+}
+
 .copyrights {
     display: flex;
     align-items: center;
@@ -162,3 +171,27 @@ footer {
 .copyrights img:hover {
     transform: scale(1.1);
 }
+
+.book-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 80vw;
+    height: auto;
+    margin: 0 0 10px 0;
+}
+
+.book-card {
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    height: 250px;
+    gap: 10px;
+}
+
