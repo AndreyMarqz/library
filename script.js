@@ -13,15 +13,16 @@ closeFormButton.addEventListener("click", () => {
 
 let myLibrary = [];
 
-function Book(author, name, pages){
+function Book(author, name, pages, readOrNot){
     this.author = author;
     this.name = name;
     this.pages = pages;
+    this.readOrNot = readOrNot;
     this.id = crypto.randomUUID();
 }
 
-function addBookToLibrary(author, name, pages){
-    const newBook = new Book(author, name, pages);
+function addBookToLibrary(author, name, pages, readOrNot){
+    const newBook = new Book(author, name, pages, readOrNot);
     myLibrary.push(newBook);
 }
 
@@ -29,14 +30,15 @@ function sendBookToLibrary(){
     const authorNameField = document.querySelector(".author-name").value;
     const bookNameField = document.querySelector(".book-title").value;
     const pagesNumberField = document.querySelector(".book-pages").value;
-
-    addBookToLibrary(authorNameField, bookNameField, Number(pagesNumberField));
+    const readOrNotCheckBox = document.querySelector(".read-or-not").checked;
+    
+    addBookToLibrary(authorNameField, bookNameField, Number(pagesNumberField), readOrNotCheckBox);
 }
 
 function displayCard(){
     let bookCardContainer = document.querySelector(".book-container");
     
-    if (!bookCardContainer) {
+    if (!bookCardContainer){
         bookCardContainer = document.createElement("div");
         bookCardContainer.classList.add("book-container");
         document.querySelector("main").appendChild(bookCardContainer);
@@ -48,10 +50,16 @@ function displayCard(){
         const bookCard = document.createElement("div");
         bookCard.classList.add("book-card");
 
+        let readStatus = '';
+        if (book.readOrNot === true) {
+            readStatus = '<p>Already read</p>';
+        }
+
         bookCard.innerHTML = `
             <h2>${book.name}</h2>
             <p><strong>Author:</strong> ${book.author}</p>
             <p><strong>Pages:</strong> ${book.pages}</p>
+            ${readStatus}
         `;
 
         bookCardContainer.appendChild(bookCard);
@@ -82,4 +90,3 @@ addBookForm.addEventListener("submit", (event) => {
     addBookForm.querySelector("form").reset();
     addBookForm.close();
 });
-
