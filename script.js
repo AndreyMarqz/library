@@ -37,7 +37,7 @@ function sendBookToLibrary(){
 
 function displayCard(){
     let bookCardContainer = document.querySelector(".book-container");
-    
+
     if (!bookCardContainer){
         bookCardContainer = document.createElement("div");
         bookCardContainer.classList.add("book-container");
@@ -47,12 +47,16 @@ function displayCard(){
     bookCardContainer.innerHTML = "";
 
     myLibrary.forEach((book) => {
+        const deleteBookBtn = document.createElement("button");
+        deleteBookBtn.classList.add("delete-book-btn");
+        deleteBookBtn.innerHTML = "Delete";
         const bookCard = document.createElement("div");
         bookCard.classList.add("book-card");
+        bookCard.dataset.id = book.id;
 
         let readStatus = '';
         if (book.readOrNot === true) {
-            readStatus = '<p>Already read</p>';
+            readStatus = '<p><strong>Already read</strong></p>';
         }
 
         bookCard.innerHTML = `
@@ -62,7 +66,35 @@ function displayCard(){
             ${readStatus}
         `;
 
+        bookCard.appendChild(deleteBookBtn);
         bookCardContainer.appendChild(bookCard);
+
+        deleteBookBtn.addEventListener("click", () => {
+            myLibrary = myLibrary.filter(b => b.id !== book.id);
+            displayCard();
+            
+            if (myLibrary.length === 0) {
+                const addBookText = document.querySelector(".add-book");
+                const main = document.querySelector("main");
+                const bookContainer = document.querySelector(".book-container");
+                
+                if (bookContainer) {
+                    bookContainer.remove();
+                }
+                
+                addBookText.style.fontSize = "";
+                addBookButton.style.width = "";
+                addBookButton.style.height = "";
+                addBookText.style.flexDirection = "";
+                addBookText.style.gap = "";
+                
+                main.style.flexDirection = "";
+                main.style.alignItems = "";
+                main.style.justifyContent = "";
+                main.style.gap = "";
+                main.style.paddingTop = "";
+            }
+        });
     });
 }
 
