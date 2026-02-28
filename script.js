@@ -56,7 +56,7 @@ function displayCard(){
 
         let readStatus = '';
         if (book.readOrNot === true) {
-            readStatus = '<p><strong>Already read</strong></p>';
+            readStatus = '<h3><strong>Already read</strong></h3>';
         }
 
         bookCard.innerHTML = `
@@ -66,8 +66,26 @@ function displayCard(){
             ${readStatus}
         `;
 
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("book-card-btns");
+
+        if (book.readOrNot === false) {
+            const alreadyReadBtn = document.createElement("button");
+            alreadyReadBtn.classList.add("already-read-btn");
+            alreadyReadBtn.innerHTML =  "Mark as read";
+            bookCard.appendChild(alreadyReadBtn);
+            buttonContainer.appendChild(alreadyReadBtn);
+
+            alreadyReadBtn.addEventListener("click", () => {
+                book.readOrNot = true;
+                displayCard();
+            });
+        }
+
         bookCard.appendChild(deleteBookBtn);
         bookCardContainer.appendChild(bookCard);
+        buttonContainer.appendChild(deleteBookBtn);
+        bookCard.appendChild(buttonContainer);
 
         deleteBookBtn.addEventListener("click", () => {
             myLibrary = myLibrary.filter(b => b.id !== book.id);
