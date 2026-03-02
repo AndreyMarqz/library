@@ -14,7 +14,7 @@ A simple and functional web application to manage your personal book collection.
 <br><br>
 <img width="3437" height="1271" alt="print4" src="https://github.com/user-attachments/assets/8f7a152b-6718-4ae3-881d-bb43d86f2b64" />
 <br><br>
-<img width="1914" height="1269" alt="print5" src="https://github.com/user-attachments/assets/cb0acda6-5907-4694-b665-16f80136ac13" />
+<img width="1147" height="1269" alt="print5" src="https://github.com/user-attachments/assets/fc97ca37-7c44-47a7-a4f8-d7ec08adb010" />
 
 ---
 
