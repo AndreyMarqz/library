@@ -2,6 +2,10 @@ const addBookForm = document.querySelector("dialog");
 const addBookButton = document.querySelector(".add-book-btn");
 const addBookSubmitButton = document.querySelector(".add-book-submit");
 const closeFormButton = document.querySelector(".close-btn");
+const searchBar = document.querySelector(".search-bar");
+const clearSearchButton = document.querySelector(".clear-search");
+
+let searchQuery = "";
 
 addBookButton.addEventListener("click", () => {
     addBookForm.showModal();
@@ -9,6 +13,25 @@ addBookButton.addEventListener("click", () => {
 
 closeFormButton.addEventListener("click", () => {
     addBookForm.close();
+});
+
+searchBar.addEventListener("input", (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    
+    if (searchQuery) {
+        clearSearchButton.style.display = "flex";
+    } else {
+        clearSearchButton.style.display = "none";
+    }
+    
+    displayCard();
+});
+
+clearSearchButton.addEventListener("click", () => {
+    searchBar.value = "";
+    searchQuery = "";
+    clearSearchButton.style.display = "none";
+    displayCard();
 });
 
 let myLibrary = [];
@@ -38,6 +61,13 @@ function sendBookToLibrary(){
 function displayCard(){
     let bookCardContainer = document.querySelector(".book-container");
 
+    if (myLibrary.length === 0) {
+        if (bookCardContainer) {
+            bookCardContainer.remove();
+        }
+        return;
+    }
+
     if (!bookCardContainer){
         bookCardContainer = document.createElement("div");
         bookCardContainer.classList.add("book-container");
@@ -46,7 +76,26 @@ function displayCard(){
 
     bookCardContainer.innerHTML = "";
 
-    myLibrary.forEach((book) => {
+    const filteredBooks = myLibrary.filter(book => {
+        if (!searchQuery) return true;
+        
+        const titleMatch = book.name.toLowerCase().includes(searchQuery);
+        const authorMatch = book.author.toLowerCase().includes(searchQuery);
+        
+        return titleMatch || authorMatch;
+    });
+
+    if (filteredBooks.length === 0 && myLibrary.length > 0) {
+        bookCardContainer.innerHTML = `
+            <div class="no-results">
+                <h2>No books found</h2>
+                <p>Try a different search term</p>
+            </div>
+        `;
+        return;
+    }
+
+    filteredBooks.forEach((book) => {
         const deleteBookBtn = document.createElement("button");
         deleteBookBtn.classList.add("delete-book-btn");
         deleteBookBtn.innerHTML = "Delete";
@@ -135,6 +184,11 @@ addBookForm.addEventListener("submit", (event) => {
     main.insertBefore(addBookText, main.firstChild);
 
     sendBookToLibrary();
+    
+    searchBar.value = "";
+    searchQuery = "";
+    clearSearchButton.style.display = "none";
+    
     displayCard();
     
     addBookForm.querySelector("form").reset();
